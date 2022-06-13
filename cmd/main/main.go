@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
-	"gorm.io/driver/mysql"
+	// "gorm.io/driver/mysql"
 	"github/avocadohooman/go-bookstore/pkg/routes"
 )
 
