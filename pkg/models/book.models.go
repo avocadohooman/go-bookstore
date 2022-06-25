@@ -1,8 +1,10 @@
 package models
 
 import (
-	"gorm.io/gorm"
+	"fmt"
 	"github/avocadohooman/go-bookstore/pkg/config"
+
+	"gorm.io/gorm"
 )
 
 var db *gorm.DB
@@ -20,17 +22,15 @@ func init() {
 	db.AutoMigrate(&Book{})
 }
 
-func (b* Book) CreateBook() *Book{
-	found := db.Find(&b)
-	if found == nil {
-		db.Create(*b)
-	}
+func (b *Book) CreateBook() *Book {
+	db.Create(&b)
 	return b
 }
 
 func GetAllBooks() []Book {
 	var Books []Book
 	db.Find(&Books)
+	fmt.Println("Books", Books)
 	return Books
 }
 
@@ -42,11 +42,11 @@ func GetBookById(Id int64) (*Book, *gorm.DB) {
 
 func DeleteBook(Id int64) Book {
 	var book Book
-	db.Where("ID=?", Id).Delete(book)
+	db.Where("ID=?", Id).Delete(&book)
 	return book
 }
 
-func (b* Book) UpdateBook(Id int64, updatedBook Book) (Book, *gorm.DB) {
-	db := db.Model(&b).Updates(Book{Name: updatedBook.Name, Author: updatedBook.Author, Publication: updatedBook.Publication})
-	return updatedBook, db
+func (b *Book) UpdateBook(Id int64) (*Book) {
+	db.Model(&b).Where("ID=?", Id).Updates(Book{Name: b.Name, Author: b.Author, Publication: b.Publication})
+	return b
 }

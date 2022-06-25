@@ -1,7 +1,7 @@
 package config
 
 import (
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -10,8 +10,8 @@ var (
 )
 
 func ConnectDb() {
-	dsn := "gmolin:password1234@12@/restdb?charset=utf8&parseTime=True&loc=Local"
-	d, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dsn := "host=localhost user=postgres password=TheAnswerIsPosgres42! dbname=go-db port=1111 sslmode=disable TimeZone=Asia/Shanghai"
+	d, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
